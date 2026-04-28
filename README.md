@@ -1,7 +1,6 @@
-# 🚨 Sentinel AI Surveillance System
+<img width="1909" height="1039" alt="image" src="https://github.com/user-attachments/assets/a831c639-e11d-4d46-b872-ed3f5bec6a4b" /># 🚨 Sentinel AI Surveillance System
 
-AI-powered real-time emergency detection and response system.
-
+AI-powered real-time surveillance system for crowd risk, fire detection, and emergency response automation.
 ---
 
 ## 🎯 Problem
@@ -57,7 +56,8 @@ Sentinel AI analyzes live video feeds to:
 
 ## 📸 Screenshots
 
-(Add your dashboard screenshots here)
+
+
 
 ---
 
