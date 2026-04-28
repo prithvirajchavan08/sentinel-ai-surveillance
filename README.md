@@ -98,6 +98,9 @@ npm run dev
 
 ## 👨‍💻 Team
 
-* Prithviraj Chavan
+* Prathaviraj Chavan
+* Viraj Mahale
+* Nirja Hati
+* Tanaya Satpute
 
 ---
