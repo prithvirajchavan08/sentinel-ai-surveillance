@@ -1,20 +1,103 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# 🚨 Sentinel AI Surveillance System
 
-# Run and deploy your AI Studio app
+AI-powered real-time emergency detection and response system.
 
-This contains everything you need to run your app locally.
+---
 
-View your app in AI Studio: https://ai.studio/apps/235b2bdf-2c7f-4e7a-8ef9-8659d3dc4cab
+## 🎯 Problem
 
-## Run Locally
+Crowd disasters, fires, and emergencies are often detected too late, leading to loss of lives.
 
-**Prerequisites:**  Node.js
+---
 
+## 💡 Solution
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+Sentinel AI analyzes live video feeds to:
+
+* Detect crowd density
+* Identify abnormal/chaotic movement
+* Detect fire & smoke
+* Predict potential emergencies
+* Trigger smart response actions
+
+---
+
+## ⚙️ Features
+
+* 🔍 Real-time crowd detection
+* ⚠️ Overcrowding & stampede detection
+* 🔥 Fire & smoke detection
+* 🧠 Behavior-based anomaly detection
+* 📊 Risk prediction (next 30–60 sec)
+* 📢 Automated emergency response system
+* 🧾 Explainable AI (WHY + WHAT + ACTION)
+
+---
+
+## 🧠 How It Works
+
+1. Video feed (CCTV / upload)
+2. AI detects people & objects (YOLOv8)
+3. Motion + density + behavior analysis
+4. Risk classification:
+
+   * Normal
+   * Overcrowded
+   * Stampede risk
+   * Fire risk
+5. System triggers alerts + response
+
+---
+
+## 🎬 Demo Video
+
+👉 (Add your Google Drive / YouTube link here)
+
+---
+
+## 📸 Screenshots
+
+(Add your dashboard screenshots here)
+
+---
+
+## 🧪 Tech Stack
+
+* Frontend: React + Vite + TypeScript
+* Backend: Node.js
+* AI: YOLOv8 + Behavior Analysis
+* Platform: Google AI Studio
+
+---
+
+## 🚀 Run Locally
+
+```bash
+npm install
+npm run dev
+```
+
+---
+
+## ⚠️ Limitations
+
+* Prototype system (not production ready)
+* Accuracy depends on video quality
+* Needs trained datasets for real deployment
+
+---
+
+## 🏆 Future Scope
+
+* Multi-camera tracking
+* Facial recognition (optional)
+* Edge deployment (CCTV integration)
+* Smart city integration
+
+---
+
+## 👨‍💻 Team
+
+* Prithviraj Chavan
+
+---
