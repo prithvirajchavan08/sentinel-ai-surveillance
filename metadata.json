@@ -1,5 +1,5 @@
 {
-  "name": "Remix: Remix: Sentinel AI Dashboard",
+  "name": "Sentinel AI Dashboard",
   "description": "Real-time AI-powered security and crowd monitoring system for multiple locations.",
   "requestFramePermissions": [
     "camera",
