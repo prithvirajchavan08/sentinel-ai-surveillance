@@ -1,0 +1,73 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isValidId(id) {
+       return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+    
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+    function isSignedIn() { return request.auth != null; }
+
+    function isValidLocation(data) {
+      return data.keys().hasAll(['name', 'ownerId', 'id'])
+        && data.size() >= 3
+        && data.size() <= 15
+        && data.name is string && data.name.size() <= 100
+        && data.id is number
+        && data.ownerId == request.auth.uid
+        && (!data.keys().hasAny(['status']) || (data.status is string && data.status.size() <= 100))
+        && (!data.keys().hasAny(['message']) || (data.message is string && data.message.size() <= 500))
+        && (!data.keys().hasAny(['action']) || (data.action is string && data.action.size() <= 500))
+        && (!data.keys().hasAny(['reason']) || (data.reason is string && data.reason.size() <= 1100))
+        && (!data.keys().hasAny(['confidence']) || data.confidence is number)
+        && (!data.keys().hasAny(['priority']) || data.priority in ['Critical', 'High', 'Medium', 'Low'])
+        && (!data.keys().hasAny(['videoSrc']) || (data.videoSrc is string && data.videoSrc.size() <= 2000))
+        && (!data.keys().hasAny(['crowdLevel']) || data.crowdLevel is number)
+        && (!data.keys().hasAny(['signals']) || (data.signals is list && data.signals.size() <= 50))
+        && (!data.keys().hasAny(['updatedAt']) || data.updatedAt is timestamp);
+    }
+
+    function isValidAlert(data) {
+      return data.keys().hasAll(['locationId', 'locationName', 'type', 'priority', 'timestamp', 'ownerId'])
+        && data.size() >= 6
+        && data.size() <= 10
+        && data.locationId is number
+        && data.locationName is string && data.locationName.size() <= 100
+        && data.type is string && data.type.size() <= 100
+        && data.priority in ['Critical', 'High', 'Medium', 'Low']
+        && data.timestamp is timestamp
+        && data.ownerId == request.auth.uid
+        && (!data.keys().hasAny(['message']) || (data.message is string && data.message.size() <= 1100))
+        && (!data.keys().hasAny(['action']) || (data.action is string && data.action.size() <= 1100));
+    }
+
+    match /locations/{locationId} {
+      allow read: if isSignedIn() && existing().ownerId == request.auth.uid;
+      allow list: if isSignedIn() && resource.data.ownerId == request.auth.uid;
+      allow create: if isSignedIn() && isValidId(locationId) && isValidLocation(incoming());
+      allow update: if isSignedIn() 
+        && isValidLocation(incoming())
+        && existing().ownerId == request.auth.uid 
+        && incoming().ownerId == existing().ownerId
+        && (
+          incoming().diff(existing()).affectedKeys().hasOnly([
+            'name', 'id', 'status', 'message', 'action', 'reason', 'confidence', 'priority', 'videoSrc', 'crowdLevel', 'signals', 'updatedAt'
+          ])
+        );
+      allow delete: if isSignedIn() && existing().ownerId == request.auth.uid;
+    }
+
+    match /alerts/{alertId} {
+      allow read: if isSignedIn() && existing().ownerId == request.auth.uid;
+      allow list: if isSignedIn() && resource.data.ownerId == request.auth.uid;
+      allow create: if isSignedIn() && isValidId(alertId) && isValidAlert(incoming());
+      allow update: if false; // Alerts are typically immutable
+      allow delete: if isSignedIn() && existing().ownerId == request.auth.uid;
+    }
+  }
+}
